@@ -7,6 +7,7 @@
 //
 
 #import "ALMainMenu.h"
+#import "ALGameScene.h"
 
 @implementation ALMainMenu
 
@@ -36,16 +37,19 @@
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
     
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
         SKNode *node = [self nodeAtPoint:location];
         
         if([node.name isEqualToString:@"Start"]) {
-            NSLog(@"here");
+            
+            SKAction *fadeAway = [SKAction fadeOutWithDuration:1.0];
+            [self runAction:fadeAway completion:^{
+                SKScene *gameScene  = [[ALGameScene alloc] initWithSize:CGSizeMake(self.size.height, self.size.width)];
+                [self.scene.view presentScene:gameScene transition:nil];
+            }];
         }
-        
     }
 }
 

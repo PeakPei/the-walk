@@ -9,5 +9,5 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface ALGameScene : SKScene
-
+@property (nonatomic, strong) SKSpriteNode *player;
 @end
