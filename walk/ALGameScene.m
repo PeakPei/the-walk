@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Austin Louden. All rights reserved.
 //
 
-#import "MyScene.h"
+#import "ALGameScene.h"
 
-@implementation MyScene
+@implementation ALGameScene
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
