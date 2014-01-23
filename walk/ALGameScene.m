@@ -23,13 +23,26 @@
                                        CGRectGetMidY(self.frame));
         [self addChild:myLabel];
         
-        // gamepad up down left right
+        // gamepad
         SKSpriteNode *upNode = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(15.0f, 15.0f)];
-        upNode.position = CGPointMake(CGRectGetMaxX(self.frame)-30,CGRectGetMaxY(self.frame)-30);
+        upNode.position = CGPointMake(CGRectGetMaxX(self.frame)-40, 50);
         upNode.name = @"upNode";
         [self addChild:upNode];
         
+        SKSpriteNode *downNode = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(15.0f, 15.0f)];
+        downNode.position = CGPointMake(CGRectGetMaxX(self.frame)-40, 10);
+        downNode.name = @"downNode";
+        [self addChild:downNode];
         
+        SKSpriteNode *leftNode = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(15.0f, 15.0f)];
+        leftNode.position = CGPointMake(CGRectGetMaxX(self.frame)-60, 31);
+        leftNode.name = @"leftNode";
+        [self addChild:leftNode];
+        
+        SKSpriteNode *rightNode = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(15.0f, 15.0f)];
+        rightNode.position = CGPointMake(CGRectGetMaxX(self.frame)-20, 31);
+        rightNode.name = @"rightNode";
+        [self addChild:rightNode];
         
         self.player = [SKSpriteNode spriteNodeWithImageNamed:@"back_still"];
         self.player.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)-40);
@@ -44,12 +57,29 @@
     
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
-        CGFloat xDist = (location.x - self.player.position.x);
-        CGFloat yDist = (location.y - self.player.position.y);
-        CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
-        NSLog(@"distance: %f", distance);
-        SKAction *moveAction = [SKAction moveTo:location duration:distance/250.0f];
-        [self.player runAction:moveAction];
+        SKNode *node = [self nodeAtPoint:location];
+        
+        // move up
+        if([node.name isEqualToString:@"upNode"]) {
+            SKAction *moveAction = [SKAction moveTo:CGPointMake(self.player.position.x, self.player.position.y+30) duration:0.6f];
+            [self.player runAction:moveAction];
+        }
+        // move down
+        else if([node.name isEqualToString:@"downNode"]) {
+            SKAction *moveAction = [SKAction moveTo:CGPointMake(self.player.position.x, self.player.position.y-30) duration:0.6f];
+            [self.player runAction:moveAction];
+        }
+        // move left
+        else if([node.name isEqualToString:@"leftNode"]) {
+            SKAction *moveAction = [SKAction moveTo:CGPointMake(self.player.position.x-30, self.player.position.y) duration:0.6f];
+            [self.player runAction:moveAction];
+        }
+        // move right
+        else if([node.name isEqualToString:@"rightNode"]) {
+            SKAction *moveAction = [SKAction moveTo:CGPointMake(self.player.position.x+30, self.player.position.y) duration:0.6f];
+            [self.player runAction:moveAction];
+        }
+
     }
 }
 
