@@ -7,6 +7,15 @@
 //
 
 #import "ALGameScene.h"
+#import "ALPlayer.h"
+
+@interface ALGameScene ()
+{
+    SKSpriteNode *playerSprite;
+    ALPlayer *player;
+}
+
+@end
 
 @implementation ALGameScene
 
@@ -15,7 +24,7 @@
         
         self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
-        // info labels
+        // interface
         SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Courier-Bold"];
         myLabel.text = @"9:30 (26° F)";
         myLabel.fontSize = 30;
@@ -44,9 +53,15 @@
         rightNode.name = @"rightNode";
         [self addChild:rightNode];
         
-        self.player = [SKSpriteNode spriteNodeWithImageNamed:@"back_still"];
-        self.player.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)-40);
-        [self addChild:self.player];
+        // player
+        player = [[ALPlayer alloc] init];
+        NSLog(@"Warmth: %ld", player.warmth);
+        
+        playerSprite = [SKSpriteNode spriteNodeWithImageNamed:@"back_still"];
+        playerSprite.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)-40);
+        [self addChild:playerSprite];
+        
+    
         
     }
     return self;
@@ -61,23 +76,23 @@
         
         // move up
         if([node.name isEqualToString:@"upNode"]) {
-            SKAction *moveAction = [SKAction moveTo:CGPointMake(self.player.position.x, self.player.position.y+30) duration:0.6f];
-            [self.player runAction:moveAction];
+            SKAction *moveAction = [SKAction moveTo:CGPointMake(playerSprite.position.x, playerSprite.position.y+30) duration:0.6f];
+            [playerSprite runAction:moveAction];
         }
         // move down
         else if([node.name isEqualToString:@"downNode"]) {
-            SKAction *moveAction = [SKAction moveTo:CGPointMake(self.player.position.x, self.player.position.y-30) duration:0.6f];
-            [self.player runAction:moveAction];
+            SKAction *moveAction = [SKAction moveTo:CGPointMake(playerSprite.position.x, playerSprite.position.y-30) duration:0.6f];
+            [playerSprite runAction:moveAction];
         }
         // move left
         else if([node.name isEqualToString:@"leftNode"]) {
-            SKAction *moveAction = [SKAction moveTo:CGPointMake(self.player.position.x-30, self.player.position.y) duration:0.6f];
-            [self.player runAction:moveAction];
+            SKAction *moveAction = [SKAction moveTo:CGPointMake(playerSprite.position.x-30, playerSprite.position.y) duration:0.6f];
+            [playerSprite runAction:moveAction];
         }
         // move right
         else if([node.name isEqualToString:@"rightNode"]) {
-            SKAction *moveAction = [SKAction moveTo:CGPointMake(self.player.position.x+30, self.player.position.y) duration:0.6f];
-            [self.player runAction:moveAction];
+            SKAction *moveAction = [SKAction moveTo:CGPointMake(playerSprite.position.x+30, playerSprite.position.y) duration:0.6f];
+            [playerSprite runAction:moveAction];
         }
 
     }
